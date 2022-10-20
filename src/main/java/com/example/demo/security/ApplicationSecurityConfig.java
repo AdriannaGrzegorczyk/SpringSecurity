@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.example.demo.security.ApplicationUserRole.*;
 
@@ -35,8 +38,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http
-               .csrf()
-               .and()
+               .csrf().disable()
                .authorizeRequests()
                .antMatchers("/","index","/css/", "/js/*")
                .permitAll()
@@ -44,7 +46,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                .anyRequest()
                .authenticated()
                .and()
-               .httpBasic();
+               .formLogin()
+               .loginPage("/login").permitAll()
+               .defaultSuccessUrl("/courses",true)
+               .and()
+               .rememberMe().tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+               .key("somethingverysecured")
+               .and()
+               .logout()
+               .logoutUrl("/logout")
+               .logoutRequestMatcher(new AntPathRequestMatcher("/logout","GET"))
+               .clearAuthentication(true)
+               .clearAuthentication(true)
+               .invalidateHttpSession(true)
+               .deleteCookies("JSESSIONID","remember-me")
+               .logoutSuccessUrl("/login");
+
     }
 
 
@@ -55,7 +72,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails annaSmithUser = User.builder()
                 .username("annasmith")
                 .password(passwordEncoder.encode("password"))
-  //              .roles(STUDENT.name())
+  //            .roles(STUDENT.name())
                 .authorities(STUDENT.getGrantedAuthority())
                 .build();
 
