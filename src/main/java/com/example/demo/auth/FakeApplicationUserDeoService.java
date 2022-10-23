@@ -31,7 +31,7 @@ public class FakeApplicationUserDeoService implements ApplicationUserDeo {
                 new ApplicationUser(
                         "annasmith",
                         passwordEncoder.encode("password"),
-                        (List<? extends GrantedAuthority>) STUDENT.getGrantedAuthority(),
+                        STUDENT.getGrantedAuthority(),
                         true,
                         true,
                         true,
@@ -41,7 +41,7 @@ public class FakeApplicationUserDeoService implements ApplicationUserDeo {
                 new ApplicationUser(
                         "Linka",
                         passwordEncoder.encode("password"),
-                        (List<? extends GrantedAuthority>) ADMIN.getGrantedAuthority(),
+                        ADMIN.getGrantedAuthority(),
                         true,
                         true,
                         true,
@@ -51,7 +51,7 @@ public class FakeApplicationUserDeoService implements ApplicationUserDeo {
                 new ApplicationUser(
                         "Tom",
                         passwordEncoder.encode("password"),
-                        (List<? extends GrantedAuthority>) ADMINTRAINEE.getGrantedAuthority(),
+                        ADMINTRAINEE.getGrantedAuthority(),
                         true,
                         true,
                         true,

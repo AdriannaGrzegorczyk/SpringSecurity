@@ -9,7 +9,7 @@ import java.util.List;
 public class ApplicationUser implements UserDetails {
 
 
-    private final List<? extends GrantedAuthority> grantedAuthorities;
+    private final Collection<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
     private final String username;
     private final boolean isAccountNonExpired;
@@ -20,7 +20,7 @@ public class ApplicationUser implements UserDetails {
     public ApplicationUser(
                            String username,
                            String password,
-                           List<? extends GrantedAuthority> grantedAuthorities,
+                           Collection<? extends GrantedAuthority> grantedAuthorities,
                            boolean isAccountNonExpired,
                            boolean isAccountNonLocked,
                            boolean isCredentialsNonExpired,
